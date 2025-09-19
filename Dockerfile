@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.9-slim-bullseye
 
 WORKDIR /app
 
@@ -9,12 +9,12 @@ COPY . .
 
 # Install Chrome and Chromedriver
 RUN apt-get update && apt-get install -y \
-    chromium-driver \
     chromium \
+    chromium-driver \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/usr/lib/chromium-browser/:${PATH}"
+# Chromium is in /usr/bin on bullseye/bookworm
+ENV PATH="/usr/bin:${PATH}"
 
 CMD ["python", "app.py"]
-
